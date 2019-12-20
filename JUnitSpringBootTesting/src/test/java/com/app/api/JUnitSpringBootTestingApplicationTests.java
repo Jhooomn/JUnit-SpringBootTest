@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.app.api.controller.UserController;
 import com.app.api.infastucture.dto.UserDto;
 import com.app.api.infrastructure.repository.database.UserRepository;
 
@@ -19,21 +20,22 @@ import com.app.api.infrastructure.repository.database.UserRepository;
 class JUnitSpringBootTestingApplicationTests {
 
 	@Autowired
-	public UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
 	public TestEntityManager entityManager;
 
 	@Test
 	void contextLoads() {
-		UserDto user = new UserDto(15, "Jhon", 20);
+
+		UserDto user = new UserDto(10, "Jhooomn", 20);
 
 		entityManager.persist(user);
 		entityManager.flush();
 
 		UserDto found = userRepository.findById(user.getId()).get();
 
-		assertThat(user).isEqualTo(found);
+		assertThat(found.getUsername()).isEqualTo("Jhooomn");
 
 	}
 
